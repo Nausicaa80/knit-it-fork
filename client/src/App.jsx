@@ -19,7 +19,7 @@ function App() {
       .catch(error => {
         setError(error)
       });
-  }, []);
+  }, [isForm]);
 
   const showForm = () => [
     setIsForm(!isForm)

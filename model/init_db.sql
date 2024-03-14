@@ -17,5 +17,6 @@ CREATE TABLE projects(
     needles VARCHAR(255) not null,
     start VARCHAR(255) not null,
     end VARCHAR(255),
-    complete BOOLEAN, PRIMARY KEY (id)
+    completed BOOLEAN, PRIMARY KEY (id),
+    img VARCHAR (2500) not null
     );

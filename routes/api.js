@@ -35,14 +35,13 @@ router.get("/projects", (req, res) => {
 router.post("/projects", async (req, res) => {
   let newProj = req.body;
   try {
-    await db(`INSERT INTO projects (title, designer, yarn, needles, start, end, completed, img) VALUES (
+    await db(`INSERT INTO projects (title, designer, yarn, needles, start, end, img) VALUES (
       "${newProj.title}", 
       "${newProj.designer}", 
       "${newProj.yarn}", 
       "${newProj.needles}", 
       "${newProj.start}", 
       "${newProj.end}", 
-      ${newProj.completed},
       "${newProj.img}"
     );`)
     //TODO: add image 
