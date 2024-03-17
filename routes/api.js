@@ -2,35 +2,42 @@ var express = require("express");
 var router = express.Router();
 const db = require("../model/helper.js");
 
-
-/*     -----     FUNCTIONS     -----     */
-
+/* ----- FUNCTIONS ----- */
 
 function selectAllItems(req, res) {
   db("SELECT * FROM projects ORDER BY id ASC;")
-  .then(results => {
-    res.send(results.data);
-  })
-  .catch(err => res.status(500).send(err))
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(err => res.status(500).send(err));
 }
 
-
-/*     -----     GET     -----     */
-
+/* ----- GET ----- */
 
 // send message when api is accessed
 router.get("/", (req, res) => {
-  res.send("welcome to the api!")
+  res.send("welcome to the api!");
 });
 
 // send back full list of items
 router.get("/projects", (req, res) => {
-  selectAllItems(req, res)
+  selectAllItems(req, res);
 });
 
+// fetch YouTube videos from the database
+router.get("/tutorials", (req, res) => {
+  const sql = 'SELECT * FROM tutorials';
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.json(result);
+    }
+  });
+});
 
-/*     -----     POST     -----     */
-
+/* ----- POST ----- */
 
 router.post("/projects", async (req, res) => {
   let newProj = req.body;
@@ -43,17 +50,15 @@ router.post("/projects", async (req, res) => {
       "${newProj.start}", 
       "${newProj.end}", 
       "${newProj.img}"
-    );`)
+    );`);
     //TODO: add image 
-    selectAllItems(req, res)
+    selectAllItems(req, res);
   } catch(err) {
-    res.status(500).send(err)
+    res.status(500).send(err);
   }
 });
 
-
-/*     -----     PUT     -----     */
-
+/* ----- PUT ----- */
 
 router.put("/projects/:projects_id", async (req, res) => {
   try {
@@ -69,22 +74,19 @@ router.put("/projects/:projects_id", async (req, res) => {
     WHERE id = ${req.params.projects_id};`);
     selectAllItems(req, res);
   } catch(err) {
-    res.status(500).send(err)
+    res.status(500).send(err);
   }
 });
 
-
-/*     -----     DELETE     -----     */
-
+/* ----- DELETE ----- */
 
 router.delete("/projects/:projects_id", async (req, res) => {
   try {
     await db(`DELETE FROM projects WHERE id = ${req.params.projects_id};`);
     selectAllItems(req, res);
   } catch(err) {
-    req.status(500).send(err)
+    req.status(500).send(err);
   }
 });
-
 
 module.exports = router;

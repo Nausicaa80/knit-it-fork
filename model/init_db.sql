@@ -27,6 +27,9 @@ CREATE TABLE projects(
     url VARCHAR(2500) NOT NULL,
     img VARCHAR(2500) NOT NULL
 );
+    
+
+
 
     INSERT into tutorials (title, url, img) VALUES
     ('Knitting for Beginners' , 'https://www.youtube.com/watch?v=hM5M2Fu0RtY', 'https://www.youtube.com/watch?v=hM5M2Fu0RtY'),
