@@ -4,6 +4,7 @@ import './App.css';
 import Form from './components/Form.jsx';
 import ProjectList from './components/ProjectList.jsx';
 import profile from './assets/profile.png';
+import ImageGrid from './components/Imagegrid.jsx';
 
 function App() {
   const [projects, setProjects] = useState([]);
