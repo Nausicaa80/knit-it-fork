@@ -39,6 +39,17 @@ function App() {
     setIsForm(!isForm);
   }
 
+  useEffect(() => {
+    // Fetch videos from the backend
+    axios.get("/api/tutorials")
+      .then(response => {
+        setVideos(response.data);
+      })
+      .catch(error => {
+        setError(error);
+      });
+  }, []);
+
   return (
     <>
       <header>
@@ -61,12 +72,11 @@ function App() {
       </div>
 
       <div>
-        
         <ul>
-          {videos.map(video => (
-            <li key={video.id}>
-              <p>Title: {video.title}</p>
-              <p>URL: {video.url}</p>
+          {videos.map(tutorial => (
+            <li key={tutorial.id}>
+              <p>Title: {tutorial.title}</p>
+              <p>URL: {tutorial.url}</p>
               {/* Add more fields as needed */}
             </li>
           ))}

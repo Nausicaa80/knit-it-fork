@@ -46,7 +46,7 @@ header img {
 
 
 .card {
-  background-color: #c3a29e;
+  background-color: palevioletred;
   display: inline-block;
   text-align: center;
   padding: 40px;
@@ -63,7 +63,7 @@ img {
 }
 
 input, textarea {
-  background-color: white;
+  background-color: palevioletred;
   margin: 10px;
   color: #b185a7;
   display: block;
@@ -104,15 +104,3 @@ button {
   cursor: pointer;
 }
 
-.tutorials.button {
-  padding: 10px;
-  margin: 10px;
-  border: none;
-  border-radius: 10px;
-  background-color: #b185a7;
-  text-transform: lowercase;
-  font-family: "Neucha", cursive;
-  font-size: 1.5rem;
-  width: 96%;
-  cursor: pointer;
-}
