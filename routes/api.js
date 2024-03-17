@@ -27,7 +27,7 @@ router.get("/projects", (req, res) => {
 // fetch YouTube videos from the database
 router.get("/tutorials", (req, res) => {
   const sql = 'SELECT * FROM tutorials';
-  db.query(sql, (err, result) => {
+  db.tutorials(sql, (err, result) => {
     if (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');

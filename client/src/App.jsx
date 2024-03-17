@@ -11,6 +11,16 @@ function App() {
   const [error, setError] = useState("");
   const [isForm, setIsForm] = useState(false);
 
+  const handleFetchTutorials = () => {
+    axios.get("/api/tutorials")
+      .then(response => {
+        setVideos(response.data);
+      })
+      .catch(error => {
+        setError(error);
+      });
+  }
+
   useEffect(() => {
     // Fetch projects
     axios.get("/api/projects")
@@ -22,27 +32,11 @@ function App() {
       });
     
     // Fetch videos
-    axios.get("/api/titorials")
-      .then(response => {
-        setVideos(response.data);
-      })
-      .catch(error => {
-        setError(error);
-      });
+    handleFetchTutorials();
   }, [isForm]);
 
   const showForm = () => {
     setIsForm(!isForm);
-  }
-
-  const handleFetchTutorials = () => {
-    axios.get("/api/tutorials")
-      .then(response => {
-        setVideos(response.data);
-      })
-      .catch(error => {
-        setError(error);
-      });
   }
 
   return (

@@ -103,3 +103,16 @@ button {
   width: 96%;
   cursor: pointer;
 }
+
+.tutorials.button {
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: #b185a7;
+  text-transform: lowercase;
+  font-family: "Neucha", cursive;
+  font-size: 1.5rem;
+  width: 96%;
+  cursor: pointer;
+}
