@@ -35,7 +35,7 @@ h1 {
 
 h2 {
   font-size: 2.5rem;
-  color: #5f1a37;
+  color:pink;
 
 }
 
@@ -46,7 +46,7 @@ header img {
 
 
 .card {
-  background-color: palevioletred;
+  background-color: pink;
   display: inline-block;
   text-align: center;
   padding: 40px;
@@ -63,7 +63,7 @@ img {
 }
 
 input, textarea {
-  background-color: palevioletred;
+  background-color: pink;
   margin: 10px;
   color: #b185a7;
   display: block;
@@ -104,3 +104,20 @@ button {
   cursor: pointer;
 }
 
+.button {
+  padding: 10px 20px; /* Adjust padding to fit your desired button size */
+  margin-right: 10px; /* Add margin to separate buttons */
+  border: none;
+  border-radius: 10px;
+  background-color: #b185a7;
+  text-transform: lowercase;
+  font-family: "Neucha", cursive;
+  font-size: 1.5rem;
+  width: auto; /* Set width to auto to adjust based on content */
+  cursor: pointer;
+}
+.rainbow-banner {
+  width: 2px; /* Adjust the width of the banner */
+  height: 100%; /* Adjust the height of the banner */
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); /* Define the rainbow gradient */
+}

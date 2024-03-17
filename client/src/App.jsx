@@ -11,18 +11,8 @@ function App() {
   const [error, setError] = useState("");
   const [isForm, setIsForm] = useState(false);
 
-  const handleFetchTutorials = () => {
-    axios.get("/api/tutorials")
-      .then(response => {
-        setVideos(response.data);
-      })
-      .catch(error => {
-        setError(error);
-      });
-  }
-
   useEffect(() => {
-    // Fetch projects
+    // Fetch projects and videos when the component mounts or when isForm changes
     axios.get("/api/projects")
       .then(response => {
         setProjects(response.data);
@@ -30,17 +20,7 @@ function App() {
       .catch(error => {
         setError(error);
       });
-    
-    // Fetch videos
-    handleFetchTutorials();
-  }, [isForm]);
 
-  const showForm = () => {
-    setIsForm(!isForm);
-  }
-
-  useEffect(() => {
-    // Fetch videos from the backend
     axios.get("/api/tutorials")
       .then(response => {
         setVideos(response.data);
@@ -48,25 +28,30 @@ function App() {
       .catch(error => {
         setError(error);
       });
-  }, []);
+  }, [isForm]); // Triggered when isForm changes
+
+  const showForm = () => {
+    setIsForm(!isForm);
+  }
 
   return (
     <>
       <header>
-        <div className="top">
-          <button id="view-btn" onClick={showForm}>
-            {isForm ? 'projects' : 'add new'}  
-          </button>
-          <button id="view-tutorials-btn" onClick={handleFetchTutorials}>
-            Tutorials
-          </button>
-          <img src={profile} alt={"profile image"} />
-        </div>
-        <div className="title">
-          <h1>knit it!</h1>
-        </div>
-      </header>
-      
+  <div className="top">
+    <button id="view-btn" onClick={showForm} className="button">
+      {isForm ? 'projects' : 'add new'}  
+    </button>
+    <div className="rainbow-banner"></div> {/* Rainbow banner */}
+    <button id="view-tutorials-btn" onClick={() => axios.get("/api/tutorials").then(response => setVideos(response.data)).catch(error => setError(error))} className="button">
+      Tutorials
+    </button>
+    <img src={profile} alt={"profile image"} />
+  </div>
+  <div className="title">
+    <h1>knit it!</h1>
+  </div>
+</header>
+
       <div className="view">
         {isForm ? <Form createProject /> : <ProjectList projects={projects} />}
       </div>
