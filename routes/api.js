@@ -44,7 +44,7 @@ router.get("/tutorials", async (req, res) => {
     for (const video of videos.data) {
       const response = await youtube.videos.list({
         part: 'snippet',
-        id: video.youtubeId,
+        id: video.youtubeID,
       });
       const videoInfo = response.data.items[0].snippet;
       videoInfoArray.push({
