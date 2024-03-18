@@ -30,32 +30,26 @@ router.get("/projects", (req, res) => {
 //YouTube Data API client 
 const youtube = google.youtube({
   version: 'v3',
-  auth: process.env.AIzaSyAFCOhv0O78RmFUoKyJHiT6KYRJczJGvrA, // Access API key from environment variables
+  auth:'AIzaSyAFCOhv0O78RmFUoKyJHiT6KYRJczJGvrA', // Access API key from environment variables
 });
 
-// Fetch videos from the database
+// Fetch videos from the YouTube Data API
 router.get("/tutorials", async (req, res) => {
   try {
     // Array to store video information
     const videoInfoArray = [];
 
-    // Define video titles and IDs
-    const videos = [
-      { title: 'Knitting for Beginners', id: 'hM5M2Fu0RtY' },
-      { title: 'How to PURL STITCH for Total Beginners', id: '7ePhLqw6HDM' },
-      { title: 'Continental Knitting Two Ways', id: 'q92bAeVFdao' }
-    ];
-
     // Fetch information for each video
-    for (const video of videos) {
+    const videos = await db("SELECT * FROM tutorials;");
+    for (const video of videos.data) {
       const response = await youtube.videos.list({
         part: 'snippet',
-        id: video.id,
+        id: video.youtubeId,
       });
       const videoInfo = response.data.items[0].snippet;
       videoInfoArray.push({
         title: video.title,
-        url: `https://www.youtube.com/watch?v=${video.id}`,
+        url: video.url,
         thumbnail: videoInfo.thumbnails.default.url
       });
     }
