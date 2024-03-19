@@ -1,65 +1,96 @@
-require('dotenv').config(); // Load environment variables
 
-const express = require("express");
-const router = express.Router();
+var express = require("express");
+var router = express.Router();
 const db = require("../model/helper.js");
-// const { google } = require('googleapis');
 
-/* ----- FUNCTIONS ----- */
+
+/*     -----     FUNCTIONS     -----     */
+
 
 function selectAllItems(req, res) {
   db("SELECT * FROM projects ORDER BY id ASC;")
-    .then(results => {
-      res.send(results.data);
-    })
-    .catch(err => res.status(500).send(err));
+  .then(results => {
+    res.send(results.data);
+  })
+  .catch(err => res.status(500).send(err))
 }
 
-/* ----- GET ----- */
+
+/*     -----     GET     -----     */
+
 
 // send message when api is accessed
 router.get("/", (req, res) => {
-  res.send("Welcome to the API!");
+  res.send("welcome to the api!")
 });
 
 // send back full list of items
 router.get("/projects", (req, res) => {
-  selectAllItems(req, res);
+  selectAllItems(req, res)
 });
 
-// //YouTube Data API client 
-// const youtube = google.youtube({
-//   version: 'v3',
-//   auth:'AIzaSyAFCOhv0O78RmFUoKyJHiT6KYRJczJGvrA', // Access API key from environment variables
-// });
+//send back video tutorials from db
+router.get ("/tutorials", (req,res) =>{
+  selectAllItems(req,res)
+});
 
-// Fetch videos from the YouTube Data API
-router.get("/tutorials", async (req, res) => {
+/*     -----     POST     -----     */
+
+
+router.post("/projects", async (req, res) => {
+  let newProj = req.body;
   try {
-    // Array to store video information
-    const videoInfoArray = [];
-
-    // Fetch information for each video
-    const videos = await db("SELECT * FROM tutorials;");
-    for (const video of videos.data) {
-      const response = await youtube.videos.list({
-        part: 'snippet',
-        id: video.youtubeID,
-      });
-      const videoInfo = response.data.items[0].snippet;
-      videoInfoArray.push({
-        title: video.title,
-        url: video.url,
-        thumbnail: videoInfo.thumbnails.default.url
-      });
-    }
-
-    // Send the video data to the client
-    res.json(videoInfoArray);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
+    await db(`INSERT INTO projects (title, designer, yarn, needles, start, end, completed, img) VALUES (
+      "${newProj.title}", 
+      "${newProj.designer}", 
+      "${newProj.yarn}", 
+      "${newProj.needles}", 
+      "${newProj.start}", 
+      "${newProj.end}", 
+      ${newProj.completed},
+      "${newProj.img}"
+    );`)
+    //TODO: add image 
+    selectAllItems(req, res)
+  } catch(err) {
+    res.status(500).send(err)
   }
 });
+
+
+/*     -----     PUT     -----     */
+
+
+router.put("/projects/:projects_id", async (req, res) => {
+  try {
+    await db(`UPDATE projects SET 
+    title = "${newproj.title}", 
+    designer = "${newproj.designer}", 
+    yarn = "${newproj.yarn}", 
+    needles = "${newproj.needles}", 
+    start = "${newproj.start}", 
+    end = "${newproj.end}", 
+    completed = ${newproj.completed}, 
+    img = "${newproj.img}"
+    WHERE id = ${req.params.projects_id};`);
+    selectAllItems(req, res);
+  } catch(err) {
+    res.status(500).send(err)
+  }
+});
+
+
+/*     -----     DELETE     -----     */
+
+
+router.delete("/projects/:projects_id", async (req, res) => {
+  try {
+    await db(`DELETE FROM projects WHERE id = ${req.params.projects_id};`);
+    selectAllItems(req, res);
+  } catch(err) {
+    req.status(500).send(err)
+  }
+});
+
 
 module.exports = router;

@@ -10,11 +10,15 @@ function App() {
   const [videos, setVideos] = useState([]);
   const [error, setError] = useState("");
   const [isForm, setIsForm] = useState(false);
+  const [isTutorial, setIsTutorial] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [isTutorial,setIsTutorial]=useState(false)
 
   useEffect(() => {
-    // Fetch projects and videos when the component mounts or when isForm changes
+    fetchProjects();
+    fetchTutorials();
+  }, [isForm, isTutorial]); // Fetch projects and tutorials whenever isForm or isTutorial changes
+
+  const fetchProjects = () => {
     fetch("/api/projects")
       .then(response => {
         if (!response.ok) {
@@ -28,7 +32,9 @@ function App() {
       .catch(error => {
         setError(error.message);
       });
+  };
 
+  const fetchTutorials = () => {
     fetch("/api/tutorials")
       .then(response => {
         if (!response.ok) {
@@ -42,30 +48,29 @@ function App() {
       .catch(error => {
         setError(error.message);
       });
-  }, [isForm]); // Triggered when isForm changes
+  };
 
   const showForm = () => {
     setIsForm(!isForm);
-  
-  }
+  };
 
   const showTutorial = () => {
     setIsTutorial(!isTutorial);
-  }
+  };
 
   const handleVideoClick = (video) => {
     setSelectedVideo(video);
-  }
+  };
 
   return (
     <>
       <header>
         <div className="top">
           <button id="view-btn" onClick={showForm} className="button">
-            {isForm ? 'projects' : 'add new'}  
+            {isForm ? 'Projects' : 'Add New'}
           </button>
           <div className="rainbow-banner"></div> {/* Rainbow banner */}
-          <button id="view-tutorials-btn" onClick={showTutorial}className ="button">
+          <button id="view-tutorials-btn" onClick={showTutorial} className="button">
             Tutorials
           </button>
           <img src={profile} alt={"profile image"} />
@@ -76,25 +81,11 @@ function App() {
       </header>
 
       <div className="view">
-        {isForm ? <Form createProject /> :
-          <ProjectList projects={projects} />
-        }
+        {isForm ? <Form createProject /> : <ProjectList projects={projects} />}
       </div>
-<div className = "view">
-  {isTutorial ? <Tutorials  videos= {videos}/> : 
-  null}
-  
-  </div>
-      <div>
-        <ul>
-          {videos.map(tutorial => (
-            <li key={tutorial.id} onClick={() => handleVideoClick(tutorial)}>
-              <p>Title: {tutorial.title}</p>
-              <p>URL: {tutorial.url}</p>
-              {/* Add more fields as needed */}
-            </li>
-          ))}
-        </ul>
+
+      <div className="view">
+        {isTutorial && <Tutorials />}
       </div>
     </>
   );
