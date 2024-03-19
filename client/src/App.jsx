@@ -3,6 +3,7 @@ import './App.css';
 import Form from './components/Form.jsx';
 import ProjectList from './components/ProjectList.jsx';
 import profile from './assets/profile.png';
+import Tutorials from './components/Tutorials.jsx';
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -10,6 +11,7 @@ function App() {
   const [error, setError] = useState("");
   const [isForm, setIsForm] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [isTutorial,setIsTutorial]=useState(false)
 
   useEffect(() => {
     // Fetch projects and videos when the component mounts or when isForm changes
@@ -44,6 +46,11 @@ function App() {
 
   const showForm = () => {
     setIsForm(!isForm);
+  
+  }
+
+  const showTutorial = () => {
+    setIsTutorial(!isTutorial);
   }
 
   const handleVideoClick = (video) => {
@@ -58,7 +65,7 @@ function App() {
             {isForm ? 'projects' : 'add new'}  
           </button>
           <div className="rainbow-banner"></div> {/* Rainbow banner */}
-          <button id="view-tutorials-btn" onClick={() => setSelectedVideo(null)} className="button">
+          <button id="view-tutorials-btn" onClick={showTutorial}className ="button">
             Tutorials
           </button>
           <img src={profile} alt={"profile image"} />
@@ -69,21 +76,15 @@ function App() {
       </header>
 
       <div className="view">
-        {isForm ? <Form createProject /> : selectedVideo ? (
-          <iframe 
-            width="560" 
-            height="315" 
-            src={selectedVideo.url} 
-            title={selectedVideo.title}
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowFullScreen
-          ></iframe>
-        ) : (
+        {isForm ? <Form createProject /> :
           <ProjectList projects={projects} />
-        )}
+        }
       </div>
-
+<div className = "view">
+  {isTutorial ? <Tutorials  videos= {videos}/> : 
+  null}
+  
+  </div>
       <div>
         <ul>
           {videos.map(tutorial => (

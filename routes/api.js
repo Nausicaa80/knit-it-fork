@@ -3,7 +3,7 @@ require('dotenv').config(); // Load environment variables
 const express = require("express");
 const router = express.Router();
 const db = require("../model/helper.js");
-const { google } = require('googleapis');
+// const { google } = require('googleapis');
 
 /* ----- FUNCTIONS ----- */
 
@@ -27,11 +27,11 @@ router.get("/projects", (req, res) => {
   selectAllItems(req, res);
 });
 
-//YouTube Data API client 
-const youtube = google.youtube({
-  version: 'v3',
-  auth:'AIzaSyAFCOhv0O78RmFUoKyJHiT6KYRJczJGvrA', // Access API key from environment variables
-});
+// //YouTube Data API client 
+// const youtube = google.youtube({
+//   version: 'v3',
+//   auth:'AIzaSyAFCOhv0O78RmFUoKyJHiT6KYRJczJGvrA', // Access API key from environment variables
+// });
 
 // Fetch videos from the YouTube Data API
 router.get("/tutorials", async (req, res) => {
