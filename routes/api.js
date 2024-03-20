@@ -35,7 +35,7 @@ router.post("/projects", async (req, res) => {
   let newProj = req.body;
   try {
     await db(
-      `INSERT INTO projects (title, designer, yarn, needles, start, end, completed, img) VALUES (
+      `INSERT INTO projects (title, designer, yarn, needles, start, end, img) VALUES (
       "${newProj.title}", 
       "${newProj.designer}", 
       "${newProj.yarn}", 

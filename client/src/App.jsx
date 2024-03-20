@@ -18,8 +18,8 @@ function App() {
     fetchTutorials();
   }, [isForm, isTutorial]); // Fetch projects and tutorials whenever isForm or isTutorial changes
 
-  const fetchProjects = () => {
-    fetch("/api/projects")
+  function fetchProjects() {
+    fetch("/projects")
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch projects');
@@ -32,10 +32,10 @@ function App() {
       .catch(error => {
         setError(error.message);
       });
-  };
+  }
 
   const fetchTutorials = () => {
-    fetch("/api/tutorials")
+    fetch("/tutorials")
       .then(response => {
         if (!response.ok) {
           throw new error ('Failed to fetch tutorials');
