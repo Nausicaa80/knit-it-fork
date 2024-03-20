@@ -38,15 +38,15 @@ function App() {
     fetch("/api/tutorials")
       .then(response => {
         if (!response.ok) {
-          throw new Error('Failed to fetch tutorials');
+          throw new error ('Failed to fetch tutorials');
         }
         return response.json();
       })
       .then(data => {
         setVideos(data);
       })
-      .catch(error => {
-        setError(error.message);
+      .catch(err => {
+        setError(err.message);
       });
   };
 
