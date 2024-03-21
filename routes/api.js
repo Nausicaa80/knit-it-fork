@@ -1,8 +1,10 @@
+
 var express = require("express");
 var router = express.Router();
 const db = require("../model/helper.js");
 
 /* ----- FUNCTIONS ----- */
+
 
 function selectAllItems(req, res) {
   db("SELECT * FROM projects ORDER BY id ASC;")
@@ -11,6 +13,8 @@ function selectAllItems(req, res) {
     })
     .catch((err) => res.status(500).send(err));
 }
+
+
 
 /* ----- GET ----- */
 
@@ -24,10 +28,10 @@ router.get("/projects", (req, res) => {
   selectAllItems(req, res);
 });
 
-// Send back video tutorials from the database
-router.get("/tutorials", (req, res) => {
-  selectAllItems(req, res);
+router.get ("/tutorials", (req,res)=> {
+  selectAllItems(req,res);
 });
+
 
 /* ----- POST ----- */
 
