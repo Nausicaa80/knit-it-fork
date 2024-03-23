@@ -5,8 +5,7 @@ import ProjectList from './components/ProjectList.jsx';
 import profile from './assets/profile.png';
 import Tutorials from './components/Tutorials.jsx';
 import Error404 from './components/Error404.jsx';
-import { Route, Routes } from 'react-router-dom';
-
+import { Route, Routes, NavLink } from 'react-router-dom';
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -41,7 +40,7 @@ function App() {
     fetch("/api/tutorials")
       .then(response => {
         if (!response.ok) {
-          throw new error ('Failed to fetch tutorials');
+          throw new Error('Failed to fetch tutorials');
         }
         return response.json();
       })
@@ -69,21 +68,15 @@ function App() {
     <>
       <header>
         <div className="top">
-          <button id="view-btn" onClick={showForm} className="button">
-            {isForm ? 'Projects' : 'Add New'}
-          </button>
-          <div className="rainbow-banner"></div> {/* Rainbow banner */}
-          <button id="view-tutorials-btn" onClick={showTutorial} className="button">
-            Tutorials
-          </button>
-          <img src={profile} alt={"profile image"} />
+          <NavLink to="/form">Projects</NavLink>
+          <NavLink to="/tutorials">Tutorials</NavLink>
+          <img src={profile} alt="profile image" />
         </div>
         <div className="title">
           <h1>knit it!</h1>
         </div>
       </header>
 
-      
       <Routes>
         <Route path="/form" element={isForm ? <Form createProject /> : <ProjectList projects={projects} />} />
         <Route path="/tutorials" element={<Tutorials />} />
