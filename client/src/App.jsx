@@ -4,6 +4,9 @@ import Form from './components/Form.jsx';
 import ProjectList from './components/ProjectList.jsx';
 import profile from './assets/profile.png';
 import Tutorials from './components/Tutorials.jsx';
+import Error404 from './components/Error404.jsx';
+import { Route, Routes } from 'react-router-dom';
+
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -80,13 +83,12 @@ function App() {
         </div>
       </header>
 
-      <div className="view">
-        {isForm ? <Form createProject /> : <ProjectList projects={projects} />}
-      </div>
-
-      <div className="view">
-        {isTutorial && <Tutorials />}
-      </div>
+      
+      <Routes>
+        <Route path="/form" element={isForm ? <Form createProject /> : <ProjectList projects={projects} />} />
+        <Route path="/tutorials" element={<Tutorials />} />
+        <Route path="*" element={<Error404/>}/> {/* Fixed */}
+      </Routes>
     </>
   );
 }
